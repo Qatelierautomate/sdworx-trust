@@ -2,9 +2,16 @@
 
 **SD Worx challenge, "Unlock the Knowledge Within".** From "I found something" to "I understand why I can rely on it".
 
-**Live demo (Knowledge Hub):** https://hubbard-insight-engine.lovable.app/login. Use the one-click demo sign-in, pick **Belgium** + a customer type, and ask a question. Try "Can a Belgian SME correct payroll after closing?" (Belgium + SME) for a conflict, or "How do we handle a mid-month salary change?" (Belgium + Mid-Market) for a verified answer.
-**Live backend API:** https://sdworx-trust-b4kskswygq-uc.a.run.app (for example `GET /api/evaluation`)
-**All data is synthetic.** It contains no real SD Worx documents, clients or people.
+- **Live demo (Knowledge Hub):** https://hubbard-insight-engine.lovable.app/login
+- **Live backend API:** https://sdworx-trust-b4kskswygq-uc.a.run.app (try `/api/health` or `/api/evaluation`)
+- **All data is synthetic.** It contains no real SD Worx documents, clients or people.
+
+### Try it in 1 minute
+
+1. Open the live demo and use the **one-click demo sign-in**.
+2. Choose **Belgium + SME** and ask *"Can a Belgian SME correct payroll after closing?"* → ⚠️ **Conflicting**. The official procedure and an expert shortcut disagree with similar trust. Both are quoted, and both owners are named.
+3. Choose **Belgium + Mid-Market** and ask *"An employee got a raise halfway through the month, how do I pay it?"* → ✅ **Verified**. The current Belgian procedure wins. A Teams message saying "just backdate it" is flagged as much less reliable.
+4. Choose **Germany** and ask anything → ❔ **no answer**, and who to ask. The tool doesn't make something up.
 
 ## The problem
 
@@ -16,36 +23,50 @@ A payroll consultant gets an urgent client question. The search returns several 
 
 The information exists, but the consultant can't tell which one to act on.
 
-## What it does
+## How it decides what to trust
 
-1. **Ask:** pick a client (country, client type) and type a question in your own words.
-2. **See why to trust it:** documents are ranked by relevance, then by a visible **trust score** made of five factors with their weights:
+Documents are matched to the question (keywords and payroll synonyms), filtered by access and country, then ranked by a visible **trust score**:
 
-   | Factor | Weight |
-   |---|---:|
-   | current (reviewed within its interval, not superseded) | 30% |
-   | source type (policy > expert note > chat) | 20% |
-   | owned (has an accountable owner role) | 15% |
-   | applies here (right country and client type) | 15% |
-   | track record (confirmed solved cases in the same scope) | 20% |
+| Factor | Weight | Value |
+|---|---:|---|
+| Current | 30% | 1 within the review interval, falling to 0 at twice the interval; 0 if superseded |
+| Source type | 20% | policy 1.0, expert note 0.7, chat 0.3 |
+| Owned | 15% | 1 if an accountable owner role and a review date exist |
+| Applies here | 15% | 1 for the right country and client type, 0.5 for the right country only |
+| Track record | 20% | confirmed solved cases in the same country and client type, recent ones count more |
 
-   - Every result says why it was demoted and **who can help**.
-   - The top answer gets a label: ✅ Verified, 🟡 Likely, ⚠️ Conflicting or ❔ Unknown.
-   - Documents for another country are set aside.
-   - Restricted documents show only that they exist and who owns them, with a "request access" button.
-3. **Act, and the system learns:**
-   - **"This solved it"** raises trust, but only for that country and client type. The owner approves the documentation update.
-   - **Report a document** as outdated, wrong or wrong country. Each report is a small penalty, and the owner decides.
-   - **Conflicts are never resolved silently.** They go to both owners with an evidence pack. The owner keeps one (citing the law, agreement or contract they checked), splits the scope, or escalates.
-   - Every action is written to an **audit log**.
+- **Gates:**
+  - Documents for another country are set aside, not ranked.
+  - Superseded documents are capped at 0.2.
+  - Restricted documents show only that they exist and who owns them.
+- **Label on the answer:** ✅ Verified (a current, owned policy), 🟡 Likely (weaker sources), ⚠️ Conflicting (a contradicting source within 0.10 trust), ❔ Unknown (nothing reliable).
+- **Reasons:** every answer lists why it can or can't be trusted, its weakest factor, and **who can help**.
 
-**Trust on/off:** the same question with plain search (keyword match, newest first) versus trust ranking. On our 12 demo questions, plain search picks the right document **2/12** times and trust ranking **12/12** (`cd backend && npm run eval`). The synonyms were tuned on this demo set, so treat it as an illustration, not a benchmark.
+## What is in the live app vs the API
+
+| Knowledge Hub (live demo) | Backend API (live, tested) |
+|---|---|
+| Question by country, customer type and product | Everything the hub uses: `/api/search` |
+| Answer, trust label, "Can you trust this answer?" reasons, next step | Full ranked list with the five factor scores and weights, statuses, applies-elsewhere and locked documents |
+| Sign-in with a demo account | **"This solved it":** trust rises only for that country and client type. The owner approves the update |
+| **Blocks questions containing personal data** (national register number, email, phone) | **Report a document:** a small penalty while open. Only the owner confirms or rejects |
+| Escalation path to owner, team lead and manager | **Conflicts:** sent to both owners with an evidence pack. They keep one (citing the law, agreement or contract checked), split the scope, or escalate |
+| | Access requests, and an **audit log** of every action |
+| | `trust: false` plain-search baseline and the evaluation below |
+
+The API contract, rules and 9 demo scenarios are in [backend/PLAN.md](backend/PLAN.md).
+
+## Evaluation
+
+On 12 known-answer demo questions, **plain keyword search (newest first) picks the right document 2/12 times, and trust ranking 12/12.** Plain search puts the Teams message or another country's document on top. Run it with `cd backend && npm run eval`, or `GET /api/evaluation`.
+
+This is our own demo set, and the synonyms were tuned on it. Treat it as an illustration, not a benchmark.
 
 ## No black box
 
 - Every score can be traced to document metadata and confirmed cases.
-- No AI is used at question time. Relevance is deterministic keyword and synonym matching, and the explanations are templates built from the factor values.
-- The weights are defaults. In practice SD Worx's risk owners would set them.
+- No AI decides what is true. Relevance is deterministic keyword and synonym matching, and the reasons are built from the factor values.
+- The weights are defaults. In practice SD Worx's risk owners would set them per domain or country.
 
 ## Security and privacy
 
@@ -54,14 +75,19 @@ The information exists, but the consultant can't tell which one to act on.
   - only the owner role can approve, review a report or resolve a conflict
   - one report per role per document
   - restricted documents are filtered out before ranking, so their content never reaches the response
-- **No external calls at question time,** no secrets in the repo, and synthetic data only.
-- **Simulated, and disclosed:** identity is a role switcher, not real login. A pilot would use SD Worx's identity system, run in an EU region, and go through a DPIA and works-council review before any email or chat sources are added.
+- **No secrets in the repo.** The demo sign-in password comes from an environment variable.
+- **Minimal data flow.** No question or document text is sent to an AI provider.
+- **Aikido scan:** all findings fixed (dependency upgrades, no hard-coded credentials, the container runs as a non-root user).
+- **Simulated, and disclosed:**
+  - the backend's roles (consultant, key-account team, owners) are passed in the request
+  - a pilot would use SD Worx's identity system and run in an EU region (the demo backend runs in `us-central1`)
+  - a pilot would go through a DPIA and works-council review before any email or chat sources are added
 
 ## Repository layout
 
-- `backend/`: the trust engine and API (Node, no dependencies, 38 tests)
-- `hub/`: the employee-facing **Knowledge Hub** (TanStack Start + React, built with Lovable). Its answers come from the backend's `/api/search`; set `TRUST_BACKEND_URL` to point it elsewhere
-- `app/`: the demo data (`app/src/data/`) and a minimal fallback frontend served by the backend
+- `backend/`: the trust engine and API. Node, no dependencies, 38 tests.
+- `hub/`: the Knowledge Hub frontend (TanStack Start + React, built with Lovable). It calls the backend's `/api/search`; set `TRUST_BACKEND_URL` to use another backend.
+- `app/`: the synthetic demo data (`app/src/data/`) and a minimal fallback page served by the backend.
 
 ## Run it
 
@@ -70,17 +96,18 @@ Requires Node 20+.
 ```
 cd backend && npm test          # 38 tests, no network needed
 cd backend && npm run dev       # API on http://localhost:8787
-cd app && npm install && npm run build && cd .. && PORT=8080 node backend/server.js   # app + API on :8080
+cd backend && npm run eval      # plain search vs trust ranking
 ```
 
-- Architecture, rules, API contract and demo scenarios: [backend/PLAN.md](backend/PLAN.md)
-- Deployment (Google Cloud Run, one container): [backend/README.md](backend/README.md)
+The hub needs its own Supabase project for sign-in (see `hub/`). The live demo link is the easiest way to see it.
+
+Deployment (Google Cloud Run, one container): [backend/README.md](backend/README.md)
 
 ## Real vs simulated
 
 | Real | Simulated (disclosed) |
 |---|---|
-| Relevance ranking, trust scoring, gates, labels | Connections to SD Worx systems (25 synthetic documents) |
-| Solved cases, reports, conflicts, owner decisions, audit log | Email and chat sources (a few synthetic Teams snippets) |
-| Server-side permission checks | Identity (a role switcher instead of login) |
-| Live deployment on Google Cloud Run | Company-wide ingestion and monitoring (90-day pilot) |
+| Relevance, trust scoring, gates, labels, reasons | Connections to SD Worx systems (25 synthetic documents) |
+| Solved cases, reports, conflicts, owner decisions, audit log (API) | Email and chat sources (a few synthetic Teams snippets) |
+| Server-side permission checks | Real SD Worx identity and access rules |
+| Live deployment (Cloud Run backend, Lovable frontend) | Company-wide ingestion and monitoring (90-day pilot) |
