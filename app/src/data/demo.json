@@ -1,0 +1,23 @@
+{
+  "productName": "Replace with the product name",
+  "promise": "Replace with the one-sentence user outcome from the MVP contract.",
+  "kpi": "Replace with one measurable result and labelled assumption.",
+  "disclosure": "Prototype using synthetic data. External integrations may be simulated and are disclosed in the pitch.",
+  "steps": [
+    {
+      "title": "The user encounters the costly moment",
+      "description": "Show one believable input or exception using synthetic data.",
+      "outcome": "The judge immediately understands who has the problem and why it matters."
+    },
+    {
+      "title": "The product creates the magic moment",
+      "description": "Show one transformation, recommendation, or workflow—not a collection of features.",
+      "outcome": "The result includes the evidence, confidence, or control needed to trust it."
+    },
+    {
+      "title": "The human confirms the outcome",
+      "description": "Close the loop with confirmation, escalation, or a clearly auditable next action.",
+      "outcome": "The chosen KPI improves and the user remains in control."
+    }
+  ]
+}

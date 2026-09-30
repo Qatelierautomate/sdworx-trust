@@ -1,0 +1,32 @@
+[
+  {
+    "id": "CL1",
+    "name": "Alpine Logistics",
+    "country": "BE",
+    "clientType": "mid-size",
+    "sampleQuestions": [
+      "How do we handle a mid-month salary change?",
+      "What do I need to know to take over this client?"
+    ]
+  },
+  {
+    "id": "CL2",
+    "name": "Brasserie Lumière",
+    "country": "FR",
+    "clientType": "mid-size",
+    "sampleQuestions": [
+      "Can we correct a closed pay run retroactively?",
+      "What is the sick leave reporting deadline?"
+    ]
+  },
+  {
+    "id": "CL3",
+    "name": "Noordzee Retail",
+    "country": "NL",
+    "clientType": "enterprise",
+    "sampleQuestions": [
+      "How do we run payroll for a cross-border employee?",
+      "What are the year-end closing dates?"
+    ]
+  }
+]

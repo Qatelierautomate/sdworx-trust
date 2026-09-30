@@ -1,0 +1,15 @@
+{
+  "name": "sdworx-hackathon-backend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=../.env server.js",
+    "start": "node server.js",
+    "test": "SERVER_AI_API_KEY= node --test",
+    "eval": "SERVER_AI_API_KEY= node eval.js"
+  }
+}

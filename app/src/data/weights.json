@@ -1,0 +1,12 @@
+{
+  "label": "Default weights. In practice SD Worx sets these internally. Every change is written to the audit log.",
+  "weights": {
+    "current": 0.3,
+    "sourceType": 0.2,
+    "owned": 0.15,
+    "appliesHere": 0.15,
+    "trackRecord": 0.2
+  },
+  "sourceTypeValues": { "policy": 1.0, "expert-note": 0.7, "chat": 0.3 },
+  "trackRecord": { "capCases": 3, "halfLifeMonths": 12 }
+}

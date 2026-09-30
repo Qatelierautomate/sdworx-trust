@@ -1,0 +1,15 @@
+[
+  { "id": "C01", "documentId": "D01", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-08-20", "outcome": "Applied pro rata from the effective date. Client accepted." },
+  { "id": "C02", "documentId": "D01", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-09-02", "outcome": "Confirmed effective date in writing first. No correction needed." },
+  { "id": "C03", "documentId": "D04", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-06-11", "outcome": "Checklist caught a missing signed amendment before the cut-off." },
+  { "id": "C04", "documentId": "D02", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2025-03-15", "outcome": "Applied from the next pay period. Client accepted at the time." },
+  { "id": "C05", "documentId": "D08", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-07-10", "outcome": "Payroll lead approved the correction. Client informed per employee." },
+  { "id": "C06", "documentId": "D08", "scope": { "country": "BE", "clientType": "enterprise" }, "date": "2026-07-28", "outcome": "Correction approved by the payroll lead. Audit note recorded." },
+  { "id": "C07", "documentId": "D13", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-09-09", "outcome": "Reported by the end of the next working day. No penalty." },
+  { "id": "C08", "documentId": "D11", "scope": { "country": "FR", "clientType": "enterprise" }, "date": "2026-06-05", "outcome": "Correction approved by the payroll manager." },
+  { "id": "C09", "documentId": "D03", "scope": { "country": "NL", "clientType": "mid-size" }, "date": "2026-08-01", "outcome": "Applied from the first of the month. Agreement date documented." },
+  { "id": "C10", "documentId": "D09", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-01-12", "outcome": "Per-employee difference table sped up client approval." },
+  { "id": "C11", "documentId": "D17", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-05-02", "outcome": "Residence document confirmed. Rules agreed per pay element." },
+  { "id": "C12", "documentId": "D16", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-08-14", "outcome": "Contract schedule attached. Sick leave processed correctly." },
+  { "id": "C13", "documentId": "D20", "scope": { "country": "BE", "clientType": "mid-size" }, "date": "2026-06-25", "outcome": "Handover checklist surfaced an open issue the previous consultant had not mentioned." }
+]
