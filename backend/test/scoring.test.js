@@ -34,13 +34,13 @@ test("superseded documents are capped at 0.2 and marked outdated", () => {
   const r = score(doc(), { supersededMap: new Map([["X1", "X2"]]) });
   assert.equal(r.total, 0.2);
   assert.equal(r.status, "outdated");
-  assert.match(r.reasons[0], /superseded by X2/);
+  assert.match(r.reasons[0], /replaced by a newer version/);
 });
 
 test("contradictions flag the document as a conflict", () => {
   const r = score(doc(), { conflictsWith: ["X9"] });
   assert.equal(r.status, "conflict");
-  assert.ok(r.reasons.some((x) => x.includes("Contradicted by X9")));
+  assert.ok(r.reasons.some((x) => x.includes("Contradicted by another source")));
 });
 
 test("no owner means owned 0, status ownerless, and the fallback helper is named", () => {

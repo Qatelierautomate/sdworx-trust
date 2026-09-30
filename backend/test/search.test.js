@@ -16,7 +16,7 @@ test("scenario 1: salary change for a BE mid-size client ranks by trust and flag
   assert.deepEqual(s.results.map((r) => r.status), ["conflict", "ok", "ownerless", "conflict", "outdated", "locked"]);
   assert.deepEqual(s.appliesElsewhere.map((d) => d.docId), ["D03"]);
   assert.deepEqual(s.conflicts.map((c) => c.docIds), [["D01", "D06"]]);
-  assert.match(s.explanation.text, /Contradicted by D06/);
+  assert.match(s.explanation.text, /Contradicted by Teams thread/);
   assert.equal(s.explanation.source, "template");
 });
 
@@ -88,7 +88,7 @@ test("trust toggle: plain search puts the Teams chat first, trust ranking the ve
   const trusted = await search(q);
   assert.equal(trusted.results[0].docId, "D01");
   assert.equal(trusted.confidence.label, "verified");
-  assert.match(trusted.confidence.note, /D06 says otherwise but has much lower trust/);
+  assert.match(trusted.confidence.note, /just backdate it to the 1st" says otherwise but is much less reliable/);
 });
 
 test("confidence labels: unknown when nothing applies, likely for a non-policy top result", async () => {

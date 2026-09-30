@@ -19,12 +19,12 @@ function confidenceLabel(top, results) {
     const docIds = [top.docId, close.docId];
     const open = state.conflicts.find((c) => c.status !== "resolved" && docIds.every((id) => c.docIds.includes(id)));
     const note = open
-      ? `${close.docId} says otherwise with similar trust. Escalated to ${open.assignedTo.join(" and ")} on ${open.openedOn}, not resolved yet. Don't act on either without checking.`
-      : `${close.docId} says otherwise with similar trust. Don't act until an owner confirms. Ask ${[top.ownerRole, close.ownerRole].filter(Boolean).join(" or ")}.`;
+      ? `${close.title} says otherwise with similar trust. Escalated to ${open.assignedTo.join(" and ")} on ${open.openedOn}, not resolved yet. Don't act on either without checking.`
+      : `${close.title} says otherwise with similar trust. Don't act until an owner confirms. Ask ${[top.ownerRole, close.ownerRole].filter(Boolean).join(" or ")}.`;
     return { label: "conflicting", docIds, conflictId: open?.id ?? null, note };
   }
   const note = rivals.length
-    ? `${rivals.map((r) => r.docId).join(", ")} says otherwise but has much lower trust (${rivals.map((r) => r.trust.total).join(", ")}).`
+    ? `${rivals.map((r) => r.title).join(" and ")} says otherwise but is much less reliable.`
     : null;
   const official = top.sourceType === "policy" && top.trust.factors.current === 1 && top.trust.factors.owned === 1;
   return official ? { label: "verified", note } : { label: "likely", note: note ?? "Best available source, but not an official current policy." };

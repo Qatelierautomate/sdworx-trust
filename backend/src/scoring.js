@@ -88,7 +88,7 @@ export function scoreDocument(doc, ctx) {
   const status = outdated ? "outdated" : conflict ? "conflict" : ownerless ? "ownerless" : "ok";
 
   const reasons = [];
-  if (replacedBy) reasons.push(`Outdated: superseded by ${replacedBy} (${titles[replacedBy] ?? replacedBy})`);
+  if (replacedBy) reasons.push(`Outdated: replaced by ${titles[replacedBy] ?? "a newer version"}`);
   else if (factors.current === 0)
     reasons.push(`Outdated: last reviewed ${doc.date}, more than twice its ${doc.reviewIntervalMonths}-month review interval`);
   else if (factors.current !== null && factors.current < 1)
@@ -97,7 +97,7 @@ export function scoreDocument(doc, ctx) {
   if (doc.review === "correct") reasons.push(`Owner confirmed this is correct${doc.basis ? `, based on: ${doc.basis}` : ""}`);
   if (openReports.length)
     reasons.push(`Reported by users ${openReports.length} time${openReports.length > 1 ? "s" : ""} (${openReports.map((r) => r.reason).join(", ")})`);
-  for (const id of conflictsWith) reasons.push(`Contradicted by ${id} (${titles[id] ?? id})`);
+  for (const id of conflictsWith) reasons.push(`Contradicted by ${titles[id] ?? "another source"}`);
   if (ownerless) reasons.push("No owner: nobody is accountable for keeping this correct");
   if (factors.appliesHere === 0.5) reasons.push(`Written for ${doc.clientType} clients, not ${client.clientType}`);
   if (track.count > 0)
