@@ -13,4 +13,5 @@ COPY --from=build /repo/app/dist app/dist
 COPY app/src/data app/src/data
 COPY backend backend
 EXPOSE 8080
+USER node
 CMD ["node", "backend/server.js"]

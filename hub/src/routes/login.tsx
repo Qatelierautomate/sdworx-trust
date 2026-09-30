@@ -26,7 +26,8 @@ export const Route = createFileRoute("/login")({
 });
 
 const DEMO_EMAIL = "emma.v@sdworx.com";
-const DEMO_PASSWORD = "Knowledge!2026";
+// Demo account password comes from the environment, never from the code.
+const DEMO_PASSWORD = import.meta.env["VITE_DEMO_PASSWORD"] ?? "";
 
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
