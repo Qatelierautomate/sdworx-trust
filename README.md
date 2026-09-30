@@ -56,6 +56,12 @@ The information exists, but the consultant can't tell which one to act on.
 - **No external calls at question time,** no secrets in the repo, and synthetic data only.
 - **Simulated, and disclosed:** identity is a role switcher, not real login. A pilot would use SD Worx's identity system, run in an EU region, and go through a DPIA and works-council review before any email or chat sources are added.
 
+## Repository layout
+
+- `backend/`: the trust engine and API (Node, no dependencies, 38 tests)
+- `hub/`: the employee-facing **Knowledge Hub** (TanStack Start + React, built with Lovable). Its answers come from the backend's `/api/search`; set `TRUST_BACKEND_URL` to point it elsewhere
+- `app/`: the demo data (`app/src/data/`) and a minimal fallback frontend served by the backend
+
 ## Run it
 
 Requires Node 20+.

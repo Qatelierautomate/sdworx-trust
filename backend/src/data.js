@@ -37,6 +37,26 @@ export const findClient = (id) => {
   return client;
 };
 
+// Lets a frontend send a country name and customer type instead of one of our demo client ids.
+const COUNTRY_CODES = { belgium: "BE", france: "FR", netherlands: "NL" };
+const CLIENT_TYPES = { sme: "mid-size", "mid-market": "mid-size", "mid-size": "mid-size", enterprise: "enterprise" };
+
+export function resolveClient({ clientId, country, customerType }) {
+  if (clientId) return findClient(clientId);
+  if (!country || !customerType) throw new HttpError(400, { error: "Send clientId, or country and customerType" });
+  const code = COUNTRY_CODES[String(country).toLowerCase()] ?? String(country).slice(0, 2).toUpperCase();
+  const clientType = CLIENT_TYPES[String(customerType).toLowerCase()];
+  if (!clientType) throw new HttpError(400, { error: `Unknown customerType ${customerType}` });
+  const sample = state.clients.find((c) => c.country === code);
+  return {
+    id: `${code}-${clientType}`,
+    name: `${country} ${customerType} client`,
+    country: code,
+    clientType,
+    sampleQuestions: sample?.sampleQuestions ?? state.clients[0].sampleQuestions,
+  };
+}
+
 export const findDocument = (id) => {
   const doc = state.documents.find((d) => d.id === id);
   if (!doc) throw new HttpError(404, { error: `Unknown document ${id}` });

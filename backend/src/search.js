@@ -1,5 +1,5 @@
 // POST /api/search: access filter, relevance, country gate, trust scoring, conflicts, sort.
-import { state, DEMO_NOW, HttpError, findClient, countryPolicyOwner, roles, canSee } from "./data.js";
+import { state, DEMO_NOW, HttpError, resolveClient, countryPolicyOwner, roles, canSee } from "./data.js";
 import { rankRelevance, MIN_SHARE_OF_BEST } from "./relevance.js";
 import { scoreDocument, supersededBy, appliesToCountry } from "./scoring.js";
 import { explain } from "./explain.js";
@@ -32,8 +32,8 @@ function confidenceLabel(top, results) {
 
 // trust: false is the "plain search" baseline for the demo: keyword match, newest first,
 // no trust ranking and no country gate. Access control still applies.
-export async function search({ question, clientId, role, trust = true }) {
-  const client = findClient(clientId);
+export async function search({ question, clientId, country, customerType, role = "all-consultants", trust = true }) {
+  const client = resolveClient({ clientId, country, customerType });
   if (!question?.trim()) {
     throw new HttpError(400, { error: "empty", examples: client.sampleQuestions });
   }

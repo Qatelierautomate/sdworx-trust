@@ -1,0 +1,27 @@
+# Roadmap
+
+- [x] Translate the supplied workflow into an employee-facing information architecture.
+- [x] Build the question, answer, evidence, confidence, and escalation interface.
+- [x] Verify desktop and mobile layouts, interactions, and build health.
+- [x] Add usable Recent questions, Knowledge library, and Validations views.
+- [x] Add clear GDPR controls for personal-data warnings, retention, access, and audit visibility.
+- [x] Verify the expanded workbench across desktop and mobile.
+- [x] Add secure server-side AI answer generation through Lovable AI Gateway.
+- [x] Add preferred-language selection and pass business context to the answer model.
+- [x] Render live source-backed drafts, citations, review guidance, and safe errors.
+- [x] Verify a live AI request and responsive employee workflow.
+- [x] Add a Hub language selector beside Emma's profile and translate the main navigation and workspace controls.
+- [x] Move Hub language selection into Emma's profile menu and remove visible scoring and confidence.
+- [x] Move the trust section beside the proposed answer and simplify its wording.
+- [x] Replace the evidence-used section with an escalation path to owner, team lead and manager.
+- [x] Remove the certainty badge from the "Can you trust this answer?" section.
+- [x] Move the section navigation into the header row beside the "Knowledge Hub" title.
+- [x] Use SME, Mid-Market, Enterprise customer types; searchable full SD Worx country list; remove process stage.
+- [x] Make the horizontal section navigation scrollable on small screens with the selected section clearly visible; greet the employee by name instead of "Employee workspace".
+- [x] Remove the answer language label and the "Compare conflict" and "Ask expert" buttons from the proposed answer.
+- [x] SD Worx-branded employee sign-in page using email + password, followed by the two-factor step from the original spec.
+- [x] One-click demo sign-in so the hub opens for the demo without the email-confirmation step.
+- [x] Move Microsoft 365 out of the horizontal navigation into Emma's profile menu.
+- [x] Make the SD Worx Knowledge Hub logo click return to the dashboard view.
+- [ ] Microsoft 365 integration: surface knowledge shared in chats, emails and documents, with GDPR and internal-policy approval controls. Blocked on a workspace admin approving the SD Worx Microsoft app (App User Connector client) and replacing placeholder approved-area references.
+- [x] Remove the Validations section and rename the Workspace tab to Dashboard.

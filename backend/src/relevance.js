@@ -6,12 +6,12 @@ const SYNONYMS = [
   [/\b(take over|taking over|takeover|took over|inherit\w*|new client|new portfolio|hand over|handing over)\b/g, " handover portfolio "],
   [/\b(raise|rise|increase|increased|raised|pay rise|pay increase|salary change|new salary|promotion)\b/g, " salary change "],
   [/\b(halfway|middle|mid)\b/g, " mid month "],
-  [/\b(backdate\w*|retro\w*|last month|previous month|already paid|after close|closed)\b/g, " retroactive correction closed "],
+  [/\b(backdate\w*|retro\w*|last month|previous month|already paid|after (the )?(payroll )?clos\w*|closed|payroll clos\w*)\b/g, " retroactive correction closed "],
   [/\b(mistake|error|wrong|fix|correct|adjust\w*|amend\w*)\b/g, " correction "],
   [/\b(sick|ill|illness|sickness|off work|medical)\b/g, " sick leave absence "],
   [/\b(report|notify|declare|inform|deadline|how many days|how long|time limit)\b/g, " reporting deadline "],
   [/\b(abroad|foreign|cross border|lives in|works in|another country|two countries|commut\w*)\b/g, " cross-border tax residence "],
-  [/\b(year end|yearend|end of year|end of the year|december|cut off|cutoff|closing date\w*|closing)\b/g, " year-end closing cut-off "],
+  [/\b(year end|yearend|end of year|end of the year|december|cut off|cutoff|closing date\w*|closing calendar)\b/g, " year-end closing cut-off "],
   [/\b(who (do|should|can) i ask|expert|escalat\w*|contact)\b/g, " escalation expert "],
 ];
 

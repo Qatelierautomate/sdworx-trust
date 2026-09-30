@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790796482012,
+      "tag": "0000_add_m365_knowledge_connections",
+      "breakpoints": true
+    }
+  ]
+}
