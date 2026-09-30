@@ -2,7 +2,8 @@
 
 **SD Worx challenge, "Unlock the Knowledge Within".** From "I found something" to "I understand why I can rely on it".
 
-**Live demo:** https://sdworx-trust-b4kskswygq-uc.a.run.app
+**Live demo (Knowledge Hub):** https://hubbard-insight-engine.lovable.app/login. Use the one-click demo sign-in, pick **Belgium** + a customer type, and ask a question. Try "Can a Belgian SME correct payroll after closing?" (Belgium + SME) for a conflict, or "How do we handle a mid-month salary change?" (Belgium + Mid-Market) for a verified answer.
+**Live backend API:** https://sdworx-trust-b4kskswygq-uc.a.run.app (for example `GET /api/evaluation`)
 **All data is synthetic.** It contains no real SD Worx documents, clients or people.
 
 ## The problem
